@@ -1,0 +1,11 @@
+#ifndef MACROS
+#define MACROS
+
+#define DELIM ,
+#define MSG_ERROR_ARCH_SALIDA "msj"
+#define MSG_ERROR_ARCH_ENTRADA "msj"
+
+
+
+
+#endif

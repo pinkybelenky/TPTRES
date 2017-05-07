@@ -1,13 +1,11 @@
-typedef struct peliculas {id;
+typedef struct peliculas {double id;
                           char titulo[200];
                           char guion [200];
                           char director[200];
-                          time_t fecha;
+                          char  fecha;
                           double puntaje;
                           size_t reviews;
                         } peli_t;
-
-
 
 int main (int argc, char *argv[]){
 
@@ -15,9 +13,9 @@ int main (int argc, char *argv[]){
   peli_t * films, * aux;
   char * *csv_fields,*endptr,line[MAX_STR];
   size_t n,used_size,alooc_size;
-  FILE *entrada, *salida;
+  FILE *entrada=argv[1], *salida=argv[2];
   salida=fopen("csv_a_bin.bin","wb");
-  entrada=fopen("csv_aleer(pelis).txt","r"); /*lo abrí porque no lo había abierto el patopatopato*/
+  entrada=fopen(,"r"); /*lo abrí porque no lo había abierto el patopatopato*/
 
 
   if ((films=(peli_t*)calloc(INIT_CHOP,sizeof(peli_t)))==NULL){
@@ -45,7 +43,7 @@ int main (int argc, char *argv[]){
 
     if(used_size==alloc_size){
       if ((aux=(peli_t*)realloc(films,(alloc_size+CHOP_SIZE)*sizeof(peli_t))) == NULL){
-        fprintf(stderr, "%s:%s\n",ERROR,MSG_ERROR);
+        fprintf(stderr, "%s:%s\n",ERROR_MSG_ERROR);
         del_person_array(&films,&used_size);
         del_str_array(&csvfields,&n)
         fclose (entrada);
@@ -66,12 +64,19 @@ int main (int argc, char *argv[]){
       } /*fin del if*/
 
 
-      /*ACA TENDRÁ QUE IR EL COPY PARA CADA MIEMBRO DE LA ESTRUCUTRA PELIS, LO ESCRIBO
-      (tambien ver lo de la fecha en formato time_t)*/
+      films[used_size].id=strtod(csv_fields[ID_POS],NULL);
 
-      }
+      strcpy(films[used_size].titulo,csv_fields[TIT_POS]);
 
+      strcpy(films[used_size].guion,csv_fields[GUION_POS]);
 
+      strcpy(films[used_size].director,csv_fields[DIR_POS]);
+
+      strcpy(films[used_size].fecha,csv_fields[FECHA_POS]);/*pasar a time_t*/
+
+      films[used_size].puntaje=strtod(csv_fields[PUNTAJE_POS],NULL);
+
+      strcpy(films[used_size].reviews,csv_fields[REVIEWS_POS]);
 
 
     }
@@ -101,4 +106,13 @@ status_t del_person_array (person_t ** films, size_t *n){
   *people=NULL;
   *n=0;
   return ST_OK,
+}
+
+t_estado del_strarray (char** s_array,size_t L)
+{
+  size_t i;
+  for (i=0;i<L;i++){
+    free(s_array[i]);
+  return OK;
+  }
 }

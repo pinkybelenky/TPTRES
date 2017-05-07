@@ -13,7 +13,7 @@ t_estado split (const char *S/*string*/, char delim/*simbolo*/, char*** str_arra
     return ERROR_NULL_PTR;
   }
 
-  for(n=1,i=0,S[i],i++)
+  for(n=1,i=0;S[i];i++)
   {
       if(S[i]==delim)
       n++;
